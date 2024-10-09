@@ -196,7 +196,21 @@ class Controller {
             res.send(error)
         }
     }
-    
+    static async logOut(req,res) {
+        try {
+            req.session.destroy((err) => {
+                if (err) {
+                    res.send(err)
+                }
+                else {
+                    res.redirect('/')
+                }
+            })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
 }
 
 

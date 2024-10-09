@@ -14,7 +14,7 @@ class Controller {
     }
     static async studentSignIn(req,res) {
         try {
-            res.render('signin')
+            res.render('login')
         } catch (error) {
             res.send(error)
         }

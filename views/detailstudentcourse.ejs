@@ -98,22 +98,25 @@
 
       <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-6 mt-6 max-sm:max-w-sm max-sm:mx-auto">
         
-<% data.forEach(el => { %>
+<% data[0].Courses.forEach(el => { %>
  
-<form action="/add">
+
         <div class="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-lg overflow-hidden transition-all duration-500 hover:scale-105 relative">
          
           <div class="h-32 bg-blue-600 text-center p-4">
             <h3 class="text-2xl text-white mb-1"><%= el.name %></h3>
             
           </div>
+
+         
+
           <div class="px-6 py-4 mt-4">
           <%= el.description %>
 
             <button type="button" class="w-full mt-8 px-5 py-2.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-full">Add Course</button>
           </div>
         </div>
-    </form>
+
        
         <% }) %>
         </div>

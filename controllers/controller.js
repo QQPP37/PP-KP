@@ -4,7 +4,8 @@ const {Category, Course, Student, StudentCourse, User} = require('../models')
 class Controller {
     static async home(req, res) {
         try {
-            res.render('index')
+            let data = await Course.findAll()
+            res.render('index', {data})
         } catch (error) {
             res.send(error)
         }

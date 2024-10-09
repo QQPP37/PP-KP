@@ -133,7 +133,7 @@ class Controller {
             let data = await Student.findAll({include: Course, where: {
                 id: req.session.UserId
             }})
-            // console.log(data[0].Courses, "MASOOOOOOOOOOK");
+            console.log(data[0].Courses, "MASOOOOOOOOOOK");
             res.render('detailstudentcourse', {data})
         } catch (error) {
             res.send(error)

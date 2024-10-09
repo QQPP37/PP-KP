@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Course.belongsTo(models.Category, { foreignKey: 'categoryId' });
+      Course.belongsTo(models.Category, { foreignKey: 'CategoryId' });
       Course.belongsToMany(models.Student, { through: models.StudentCourse });
     }
   }
@@ -40,6 +40,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Description is required'
+        },
+        notNull: {
+          msg: 'Description is required'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Course',

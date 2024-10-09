@@ -6,6 +6,7 @@ class Controller {
     static async home(req, res) {
         try {
             let data = await Course.findAll()
+            console.log(data, "<<<<<<<<<<<<<<");
             res.render('index', {data})
         } catch (error) {
             res.send(error)

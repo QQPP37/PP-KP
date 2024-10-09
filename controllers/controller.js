@@ -1,4 +1,4 @@
-const { where } = require('sequelize')
+// const { where } = require('sequelize')
 const { comparePassword } = require('../helpers/bcrypt')
 const {Category, Course, Student, StudentCourse, User} = require('../models')
 
@@ -6,7 +6,7 @@ class Controller {
     static async home(req, res) {
         try {
             let data = await Course.findAll()
-            console.log(data, "<<<<<<<<<<<<<<");
+            // console.log(data, "<<<<<<<<<<<<<<");
             res.render('index', {data})
         } catch (error) {
             res.send(error)
@@ -14,7 +14,7 @@ class Controller {
     }
     static async studentSignIn(req,res) {
         try {
-            res.render('signin')
+            res.render('login')
         } catch (error) {
             res.send(error)
         }
@@ -22,9 +22,14 @@ class Controller {
     static  async handlerStudentSignIn(req,res) {
         try {
             let {email, password} = req.body
+            console.log(req.body);
+
+            
             let data = await User.findOne({where: {
                 email: email
             }})
+            console.log(data);
+            
             if (!data) {
                 throw 'Invalid e-Mail or password' 
             } 
@@ -32,11 +37,18 @@ class Controller {
                 throw 'Invalid e-Mail or password'
             }
             let checkPassword = comparePassword(password, data.password)
+            console.log(checkPassword, "pass jing");
+            
             if(!checkPassword) {
                 throw 'Invalid e-Mail or password'
             }
-            req.session.userId = data.id  
+            let data2 = await Student.findOne({where:{
+                UserId: data.id
+            }})
+            req.session.UserId = data2.id  
             req.session.role =  data.role
+            console.log(req.session, "ininih datanya");
+            
             res.redirect('/home')
         } catch (error) {
             res.send(error)
@@ -117,9 +129,14 @@ class Controller {
     }
     static async showAllStudentCourse(req,res) {
         try {
+
+            console.log(req.session.UserId,'ininih');
+            
             let data = await StudentCourse.findAll({where: {
-                StudentId: req.session.id
+                StudentId: req.session.UserId
             }})
+            console.log(data, "MASOOOOOOOOOOK");
+            
             res.render('detailstudentcourse')
         } catch (error) {
             res.send(error)

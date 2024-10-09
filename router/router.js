@@ -8,6 +8,18 @@ router.get('/signin', Controller.studentSignIn)
 router.post('/signin', Controller.handlerStudentSignIn)
 router.get('/register', Controller.register)
 router.post('/register', Controller.handlerRegister)
+router.use((req,res,next)=> {
+    if (!req.session.UserId) {
+        const error = 'Sign-In to Continue'
+        console.log('apa aja deh');
+        
+        res.redirect(`/?errors=${error}`)
+    } else {
+        console.log('YOYOYYYYYYY')
+        
+        next()
+    }
+})
 router.get('/home', Controller.showAllStudentCourse)
 
 module.exports = router

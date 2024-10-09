@@ -113,7 +113,7 @@ class Controller {
     static async selectAllCourse(req,res) {
         try {
             let data = await Course.findAll()
-            res.render('selectcourse', {data})
+            res.render('allCourses', {data})
         } catch (error) {
             res.send(error)
         }

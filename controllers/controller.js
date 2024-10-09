@@ -72,7 +72,8 @@ class Controller {
     }
     static async register(req,res) {
         try {
-            res.render('register')
+            let {errors} = req.query
+            res.render('register', {errors})
         } catch (error) {
             res.send(error)
         }
@@ -86,14 +87,30 @@ class Controller {
             let dataStudent = await Student.create({name, class: className, UserId: data.id})
             res.redirect('/login')
         } catch (error) {
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
+                error = error.errors.map(el=> {
+                    return el.message
+                })
+                res.redirect(`/register?errors=${error}`)
+            }
             res.send(error)
         }
     }
-    static async findAllCourse(req,res) {
+    static async selectAllCourse(req,res) {
         try {
             let data = await Course.findAll()
+            res.render('selectcourse', {data})
         } catch (error) {
-            
+            res.send(error)
+        }
+    }
+    static async handlerSelectAllCourse(req,res) {
+        try {
+            let {id} = req.body
+            let data = await StudentCourse.create({CourseId: id, StudentId: req.session.userId})
+            res.redirect('/home')
+        } catch (error) {
+            res.send(error)
         }
     }
 }

@@ -11,17 +11,15 @@ router.post('/register', Controller.handlerRegister)
 router.use((req,res,next)=> {
     if (!req.session.UserId) {
         const error = 'Sign-In to Continue'
-        console.log('apa aja deh');
-        
+        // console.log('apa aja deh');
         res.redirect(`/?errors=${error}`)
     } else {
-        console.log('YOYOYYYYYYY')
-        
+        // console.log('YOYOYYYYYYY')
         next()
     }
 })
 router.get('/home', Controller.showAllStudentCourse)
 router.get('/course/add', Controller.selectAllCourse)
-router.post('/course/add', Controller.handlerSelectAllCourse)
+router.get('/course/add/:id', Controller.handlerSelectAllCourse)
 
 module.exports = router

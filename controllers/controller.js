@@ -120,7 +120,7 @@ class Controller {
     }
     static async handlerSelectAllCourse(req,res) {
         try {
-            let {id} = req.body
+            let {id} = req.params
             let data = await StudentCourse.create({CourseId: id, StudentId: req.session.UserId})
             res.redirect('/home')
         } catch (error) {

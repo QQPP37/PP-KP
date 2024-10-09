@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "Introduction to Programming",
+        "description": "Learn the basics of programming languages.",
+        "duration": 30,
+        "CategoryId": 1
+    },
+    {
+        "id": 2,
+        "name": "Data Science Fundamentals",
+        "description": "An introduction to data science concepts and tools.",
+        "duration": 40,
+        "CategoryId": 2
+    },
+    {
+        "id": 3,
+        "name": "Web Development Bootcamp",
+        "description": "Build dynamic websites using HTML, CSS, and JavaScript.",
+        "duration": 50,
+        "CategoryId": 3
+    },
+    {
+        "id": 4,
+        "name": "Machine Learning Basics",
+        "description": "Understand the fundamentals of machine learning algorithms.",
+        "duration": 45,
+        "CategoryId": 4
+    },
+    {
+        "id": 5,
+        "name": "Cybersecurity Essentials",
+        "description": "Learn about protecting systems from cyber threats.",
+        "duration": 35,
+        "CategoryId": 5
+    },
+    {
+        "id": 6,
+        "name": "Mobile App Development",
+        "description": "Create mobile applications for Android and iOS.",
+        "duration": 55,
+        "CategoryId": 6
+    },
+    {
+        "id": 7,
+        "name": "Cloud Computing 101",
+        "description": "Introduction to cloud services and deployment models.",
+        "duration": 30,
+        "CategoryId": 7
+    },
+    {
+        "id": 8,
+        "name": "Artificial Intelligence Overview",
+        "description": "Explore the basics of AI and its applications.",
+        "duration": 40,
+        "CategoryId": 8
+    },
+    {
+        "id": 9,
+        "name": "Game Development Fundamentals",
+        "description": "Learn how to create simple games using Unity.",
+        "duration": 60,
+        "CategoryId": 9
+    },
+    {
+        "id": 10,
+        "name": "Digital Marketing Strategies",
+        "description": "An overview of digital marketing techniques and tools.",
+        "duration": 25,
+        "CategoryId": 10
+    }
+]

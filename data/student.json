@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "Alice Johnson",
+        "class": "Physics 101",
+        "UserId": 1
+    },
+    {
+        "id": 2,
+        "name": "Bob Smith",
+        "class": "Math 201",
+        "UserId": 2
+    },
+    {
+        "id": 3,
+        "name": "Charlie Brown",
+        "class": "Chemistry 101",
+        "UserId": 3
+    },
+    {
+        "id": 4,
+        "name": "David Wilson",
+        "class": "History 101",
+        "UserId": 4
+    },
+    {
+        "id": 5,
+        "name": "Eva Green",
+        "class": "Biology 101",
+        "UserId": 5
+    },
+    {
+        "id": 6,
+        "name": "Frank White",
+        "class": "Philosophy 101",
+        "UserId": 6
+    },
+    {
+        "id": 7,
+        "name": "Grace Lee",
+        "class": "Computer Science 101",
+        "UserId": 7
+    },
+    {
+        "id": 8,
+        "name": "Henry Adams",
+        "class": "Literature 101",
+        "UserId": 8
+    },
+    {
+        "id": 9,
+        "name": "Isabel King",
+        "class": "Art History 101",
+        "UserId": 9
+    },
+    {
+        "id": 10,
+        "name": "Jack Black",
+        "class": "Economics 101",
+        "UserId": 10
+    }
+]

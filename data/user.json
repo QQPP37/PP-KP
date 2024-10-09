@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "email": "alice.johnson@example.com",
+        "password": "123123",
+        "role": "student"
+    },
+    {
+        "id": 2,
+        "email": "bob.smith@example.com",
+        "password": "123123",
+        "role": "student"
+    },
+    {
+        "id": 3,
+        "email": "charlie.brown@example.com",
+        "password": "123123",
+        "role": "student"
+    },
+    {
+        "id": 4,
+        "email": "david.wilson@example.com",
+        "password": "123123",
+        "role": "instructor"
+    },
+    {
+        "id": 5,
+        "email": "eva.green@example.com",
+        "password": "123123",
+        "role": "student"
+    },
+    {
+        "id": 6,
+        "email": "frank.white@example.com",
+        "password": "123123",
+        "role": "instructor"
+    },
+    {
+        "id": 7,
+        "email": "grace.lee@example.com",
+        "password": "123123",
+        "role": "student"
+    },
+    {
+        "id": 8,
+        "email": "henry.adams@example.com",
+        "password": "123123",
+        "role": "student"
+    },
+    {
+        "id": 9,
+        "email": "isabel.king@example.com",
+        "password": "123123",
+        "role": "instructor"
+    },
+    {
+        "id": 10,
+        "email": "jack.black@example.com",
+        "password": "123123",
+        "role": "student"
+    }
+]

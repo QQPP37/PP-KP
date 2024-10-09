@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Software Development"
+    },
+    {
+        "id": 2,
+        "name": "Data Science"
+    },
+    {
+        "id": 3,
+        "name": "Web Development"
+    },
+    {
+        "id": 4,
+        "name": "Machine Learning"
+    },
+    {
+        "id": 5,
+        "name": "Cybersecurity"
+    },
+    {
+        "id": 6,
+        "name": "Mobile Development"
+    },
+    {
+        "id": 7,
+        "name": "Cloud Computing"
+    },
+    {
+        "id": 8,
+        "name": "Artificial Intelligence"
+    },
+    {
+        "id": 9,
+        "name": "Game Development"
+    },
+    {
+        "id": 10,
+        "name": "Digital Marketing"
+    }
+]

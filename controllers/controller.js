@@ -129,15 +129,12 @@ class Controller {
     }
     static async showAllStudentCourse(req,res) {
         try {
-
-            console.log(req.session.UserId,'ininih');
-            
-            let data = await StudentCourse.findAll({where: {
-                StudentId: req.session.UserId
+            // console.log(req.session.UserId,'ininih');
+            let data = await Student.findAll({include: Course, where: {
+                id: req.session.UserId
             }})
-            console.log(data, "MASOOOOOOOOOOK");
-            
-            res.render('detailstudentcourse')
+            // console.log(data[0].Courses, "MASOOOOOOOOOOK");
+            res.render('detailstudentcourse', {data})
         } catch (error) {
             res.send(error)
         }

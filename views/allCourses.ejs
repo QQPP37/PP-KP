@@ -100,7 +100,7 @@
         
 <% data.forEach(el => { %>
  
-<form action="/add">
+>
         <div class="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-lg overflow-hidden transition-all duration-500 hover:scale-105 relative">
          
           <div class="h-32 bg-blue-600 text-center p-4">
@@ -110,10 +110,10 @@
           <div class="px-6 py-4 mt-4">
           <%= el.description %>
 
-            <button type="button" class="w-full mt-8 px-5 py-2.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-full">Add Course</button>
+            <a href= '/course/add/<%= el.id %>' class="w-full mt-8 px-5 py-2.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-full">Add Course</a>
           </div>
         </div>
-    </form>
+   
        
         <% }) %>
         </div>

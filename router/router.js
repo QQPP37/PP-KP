@@ -21,5 +21,6 @@ router.use((req,res,next)=> {
 router.get('/home', Controller.showAllStudentCourse)
 router.get('/course/add', Controller.selectAllCourse)
 router.get('/course/add/:id', Controller.handlerSelectAllCourse)
+router.get('/course/delete/:id', Controller.deleteStudentCourse)
 
 module.exports = router

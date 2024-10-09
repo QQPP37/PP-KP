@@ -153,7 +153,50 @@ class Controller {
             res.send(error)
         }
     }
-
+    static async getAllCoursesInstructor(req,res) {
+        try {
+            let data = await Course.findAll()
+            res.render('homeinstructor')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async addCourseInstructor(req,res) {
+        try {
+            let data = await Course.findAll({include: Category})
+            res.render('addcourseinstructor', {data})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async handlerAddCourseInstructor(req,res) {
+        try {
+            let {name, duration, CategoryId, description} = req.body
+            await Course.create({name, duration, CategoryId, description})
+            res.redirect('/instructor/home')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async editCoursesInstructor(req,res) {
+        try {
+            let {id} = req.params
+            let data = await Course.findByPK(id, {include: Category})
+            res.render('editcourseinstructor', {data})
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async handlerEditCourseInstructor(req,res) {
+        try {
+            let {name, duration, CategoryId, description} = req.body
+            let data = await Course.update({name, duration, CategoryId, description})
+            res.redirect('/instructor/home')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    
 }
 
 

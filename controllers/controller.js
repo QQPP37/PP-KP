@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const { comparePassword } = require('../helpers/bcrypt')
 const {Category, Course, Student, StudentCourse, User} = require('../models')
 
@@ -113,6 +114,31 @@ class Controller {
             res.send(error)
         }
     }
+    static async showAllStudentCourse(req,res) {
+        try {
+            let data = await StudentCourse.findAll({where: {
+                StudentId: req.session.id
+            }})
+            res.render('detailstudentcourse')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async deleteStudentCourse(req,res) {
+        try {
+            if (req.session.role !== 'student') {
+                throw error
+            }
+            let {id} = req.params
+            let data = await StudentCourse.destroy({where: {
+                id
+            }})
+            res.redirect('/home')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+
 }
 
 

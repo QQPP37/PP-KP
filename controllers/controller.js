@@ -80,8 +80,9 @@ class Controller {
     }
     static async handlerRegister(req,res) {
         try {
-            let {email, password, role, name, className} = req.body
+            let {email, password, name, className} = req.body
             // console.log(req.body, "masooookkkkkkkkk");
+            let role = 'student'
             let data = await User.create({email, password, role})
             let dataStudent = await Student.create({name, class: className, UserId: data.id})
             res.redirect('/login')

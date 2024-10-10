@@ -15,7 +15,8 @@ class Controller {
     }
     static async studentSignIn(req, res) {
         try {
-            res.render('login')
+            let {mail} = req.query
+            res.render('login', {mail})
         } catch (error) {
             res.send(error)
         }
@@ -107,7 +108,7 @@ class Controller {
             let data = await User.create({ email, password, role })
             let dataStudent = await Student.create({ name, class: className, UserId: data.id })
             sendEmail(data.email, dataStudent.name)
-            res.redirect('/login')
+            res.redirect(`/login?mail=${data.email}`)
         } catch (error) {
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
                 error = error.errors.map(el => {

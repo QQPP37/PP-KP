@@ -194,7 +194,10 @@ class Controller {
                 res.redirect('/home')
             }
             let data = await Course.findAll({ include: Category })
-            res.render('addCoursesByTeacher', { data })
+            let data2 = await Category.findAll()
+            console.log(data,data2,'lllllllllllllllllllllllll');
+            
+            res.render('addcourseinstructor', { data, data2 })
         } catch (error) {
             res.send(error)
         }

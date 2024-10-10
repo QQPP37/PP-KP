@@ -224,11 +224,12 @@ class Controller {
             if (req.session.role !== 'instructor') {
                 res.redirect('/home')
             }
+            let { errors } = req.query
             let data = await Course.findAll({ include: Category })
             let data2 = await Category.findAll()
             console.log(data, data2, 'lllllllllllllllllllllllll');
 
-            res.render('addcourseinstructor', { data, data2 })
+            res.render('addcourseinstructor', { data, data2, errors })
         } catch (error) {
             res.send(error)
         }

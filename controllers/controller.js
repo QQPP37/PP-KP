@@ -242,7 +242,7 @@ class Controller {
             }
             let { errors } = req.query
             let data = await Course.findAll({ include: Category })
-            let data2 = await Category.findAll()
+            let data2 = await Category.showAll()
             console.log(data, data2, 'lllllllllllllllllllllllll');
 
             res.render('addcourseinstructor', { data, data2, errors })

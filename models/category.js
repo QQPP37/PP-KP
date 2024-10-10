@@ -13,6 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Category.hasMany(models.Course, { foreignKey: 'CategoryId' });
     }
+    static async showAll() {
+      try {
+        let data = await Category.findAll()
+        return data
+      } catch (error) {
+        // console.log(error);
+        throw error
+      }
+    }
   }
   Category.init({
     name: {

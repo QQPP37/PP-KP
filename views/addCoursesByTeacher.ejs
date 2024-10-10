@@ -17,17 +17,22 @@
       <div class="text-center mb-12">
        <h1 class="text-2xl font-bold">Add New Courses</h1>
       </div>
-
-      <form action="#" >
+      <% if (errors) { %>
+     
+        <div class="bg-red-100 text-red-800 p-4 rounded-lg mb-10" role="alert">
+          <strong class="font-bold text-sm mr-4">Error!</strong>
+          <span class="block text-sm sm:inline max-sm:mt-2"><%= errors %></span>
+        </div>
+      <% } %>
+      <form action="/instructor/course/add" method="post" >
         <div class="space-y-6">
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Name Course </label>
-            <input name="email" type="text"  class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Name Course" />
+            <input name="name" type="text"  class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Name Course" />
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Description</label>
-            <textarea name="description" type="text" class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Description" >
-            </textarea>
+            <textarea name="description" type="text" class="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500" placeholder="Description" ></textarea>
           </div>
           <div>
             <label class="text-gray-800 text-sm mb-2 block">Duration</label>
@@ -47,7 +52,12 @@
                     data-original="#000000" />
                 </svg>
             </option>
-            <option
+            <% data2.forEach(el => { %>
+             
+              <option value="<%= el.id %>">
+                <%= el.name %>
+              </option>
+              <% }) %>
              
               
             </select>

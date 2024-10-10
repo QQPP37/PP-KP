@@ -113,9 +113,11 @@ class Controller {
                 error = error.errors.map(el => {
                     return el.message
                 })
+             
                 res.redirect(`/register?errors=${error}`)
+            }else{
+                res.send(error)
             }
-            res.send(error)
         }
     }
     static async selectAllCourse(req, res) {
@@ -197,7 +199,7 @@ class Controller {
             let data2 = await Category.findAll()
             console.log(data,data2,'lllllllllllllllllllllllll');
             
-            res.render('addcourseinstructor', { data, data2 })
+            res.render('addCoursesByTeacher', { data, data2,})
         } catch (error) {
             res.send(error)
         }

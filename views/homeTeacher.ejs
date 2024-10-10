@@ -95,33 +95,50 @@
       </div>
 
 
-      <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-6 mt-6 max-sm:max-w-sm max-sm:mx-auto">
-        
-<% data.slice(0, 3).forEach(el => { %>
- 
+      
 
-        <div class="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-lg overflow-hidden transition-all duration-500 hover:scale-105 relative">
-          <span class="px-2 py-1 text-[10px] font-semibold text-white bg-orange-400 rounded-lg ml-3 absolute -left-4 top-0">Most popular</span>
-          <div class="h-32 bg-blue-600 text-center p-4">
-            <h3 class="text-2xl text-white mb-1"><%= el.name %></h3>
-            
-          </div>
-
-          <div class="h-24 w-24 mx-auto -mt-12 shadow-xl rounded-full bg-blue-600 text-white border-[3px] flex flex-col items-center justify-center border-white">
-           
-            <h3 class="text-2xl">Best Seller</h3>
-          </div>
-
-          <div class="px-6 py-4 mt-4">
-          <%= el.description %>
-
-            <button type="button" class="w-full mt-8 px-5 py-2.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-full">Get Started</button>
-          </div>
-        </div>
-
-       
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Course Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Course Description
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Course Duration
+              </th>
+              <th scope="col" class="px-6 py-3 flex justify-center">
+                  Action
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+        <% data.forEach(element => { %>
+         
+          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <%= element.name %>
+              </th>
+              <td class="px-6 py-4">
+                <%= element.description %>
+              </td>
+              <td class="px-6 py-4">
+                <%= element.duration %>
+              </td>
+              <td class="px-6 py-4 flex gap-4 justify-center">
+                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                  <a href="/instructor/course/delete/<%= element.id %>" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+              </td>
+          </tr>
         <% }) %>
-        </div>
+
+      </tbody>
+  </table>
+</div>
+
       </div>
     </div>
   </div>

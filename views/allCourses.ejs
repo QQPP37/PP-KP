@@ -77,7 +77,15 @@
       <div class="text-center my-10">
         <h2 class="text-gray-800 text-3xl font-bold mb-3">Choose a Subscription</h2>
       </div>
-
+      <div class="flex justify-center bg=red-600">
+        <% let arr = ["Software Development","Data Science","Web Development","Machine Learning","Cybersecurity","Mobile Development","Cloud Computing","Artificial Intelligence","Game Development","Digital Marketing"] %>
+        <select name="category" id="category" onchange="window.location.href=this.value">
+          <option value="/course/add">Pilih Kategori</option>
+          <% arr.forEach((el , index )=> { %>
+            <option value="/course/add?category=<%= index + 1 %>"><%= el %></option>
+          <% }) %>
+        </select>
+      </div>
 
       <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-6 mt-6 max-sm:max-w-sm max-sm:mx-auto">
         

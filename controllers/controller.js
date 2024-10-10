@@ -2,6 +2,7 @@
 const { comparePassword } = require('../helpers/bcrypt')
 const { sendEmail } = require('../helpers/nodemailer')
 const { Category, Course, Student, StudentCourse, User } = require('../models')
+const { Op } = require("sequelize")
 
 class Controller {
     static async home(req, res) {
@@ -150,11 +151,31 @@ class Controller {
     }
     static async selectAllCourse(req, res) {
         try {
-            if (req.session.role !== 'student') {
-                res.redirect('/instructor/home')
+            const {category} = req.query
+            let courses
+
+            if (category) {
+                courses = await Course.findAll({
+                    include: {
+                        model: Category,
+                        where: {
+                            id: category // Ubah CategoryId menjadi id
+                        }
+                    }
+                })
+            } else {
+                courses = await Course.findAll({
+                    include: Category // Tambahkan include Category
+                })
             }
-            let data = await Course.findAll()
-            res.render('allCourses', { data })
+
+            console.log(courses);
+
+            if (req.session.role !== 'student') {
+                return res.redirect('/instructor/home')
+            }
+
+            res.render('allCourses', { data: courses }) // Gunakan courses yang sudah diambil
         } catch (error) {
             res.send(error)
         }

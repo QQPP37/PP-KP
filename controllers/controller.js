@@ -106,7 +106,7 @@ class Controller {
             let role = 'student'
             let data = await User.create({ email, password, role })
             let dataStudent = await Student.create({ name, class: className, UserId: data.id })
-            sendEmail(data.email)
+            sendEmail(data.email, dataStudent.name)
             res.redirect('/login')
         } catch (error) {
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
@@ -194,7 +194,10 @@ class Controller {
                 res.redirect('/home')
             }
             let data = await Course.findAll({ include: Category })
-            res.render('addcourseinstructor', { data })
+            let data2 = await Category.findAll()
+            console.log(data,data2,'lllllllllllllllllllllllll');
+            
+            res.render('addcourseinstructor', { data, data2 })
         } catch (error) {
             res.send(error)
         }
@@ -213,9 +216,16 @@ class Controller {
             if (req.session.role !== 'instructor') {
                 res.redirect('/home')
             }
+            console.log('MaSOOOOkkkk');
+            
             let { id } = req.params
-            let data = await Course.findByPK(id, { include: Category })
-            res.render('editcourseinstructor', { data })
+            console.log(id, "INI ID WOY");
+            
+            let data = await Course.findByPk(id)
+            let data2 = await Category.findAll()
+            console.log(data, data2, "KIIINNGG KACAWWWWW");
+            
+            res.render('editcourseinstructor', { data, data2 })
         } catch (error) {
             res.send(error)
         }

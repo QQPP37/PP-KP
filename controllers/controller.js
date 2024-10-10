@@ -120,6 +120,9 @@ class Controller {
     }
     static async selectAllCourse(req, res) {
         try {
+            if (req.session.role !== 'student') {
+                res.redirect('/instructor/home')
+            }
             let data = await Course.findAll()
             res.render('allCourses', { data })
         } catch (error) {
@@ -139,6 +142,9 @@ class Controller {
     }
     static async showAllStudentCourse(req, res) {
         try {
+            if (req.session.role !== 'student') {
+                res.redirect('/instructor/home')
+            }
             // console.log(req.session.UserId,'ininih');
             let data = await Student.findAll({
                 include: {
@@ -171,6 +177,9 @@ class Controller {
     }
     static async getAllCoursesInstructor(req, res) {
         try {
+            if (req.session.role !== 'instructor') {
+                res.redirect('/home')
+            }
             let data = await Course.findAll()
             // console.log(data, "plisla woyyy");
             
@@ -181,6 +190,9 @@ class Controller {
     }
     static async addCourseInstructor(req, res) {
         try {
+            if (req.session.role !== 'instructor') {
+                res.redirect('/home')
+            }
             let data = await Course.findAll({ include: Category })
             res.render('addcourseinstructor', { data })
         } catch (error) {
@@ -198,6 +210,9 @@ class Controller {
     }
     static async editCoursesInstructor(req, res) {
         try {
+            if (req.session.role !== 'instructor') {
+                res.redirect('/home')
+            }
             let { id } = req.params
             let data = await Course.findByPK(id, { include: Category })
             res.render('editcourseinstructor', { data })
@@ -245,7 +260,6 @@ class Controller {
             res.send(error)
         }
     }
-
 }
 
 

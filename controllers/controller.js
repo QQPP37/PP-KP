@@ -1,108 +1,116 @@
 // const { where } = require('sequelize')
 const { comparePassword } = require('../helpers/bcrypt')
-const {Category, Course, Student, StudentCourse, User} = require('../models')
+const { sendEmail } = require('../helpers/nodemailer')
+const { Category, Course, Student, StudentCourse, User } = require('../models')
 
 class Controller {
     static async home(req, res) {
         try {
             let data = await Course.findAll()
             // console.log(data, "<<<<<<<<<<<<<<");
-            res.render('index', {data})
+            res.render('index', { data })
         } catch (error) {
             res.send(error)
         }
     }
-    static async studentSignIn(req,res) {
+    static async studentSignIn(req, res) {
         try {
             res.render('login')
         } catch (error) {
             res.send(error)
         }
     }
-    static  async handlerStudentSignIn(req,res) {
+    static async handlerStudentSignIn(req, res) {
         try {
-            let {email, password} = req.body
-            console.log(req.body);
-
-            
-            let data = await User.findOne({where: {
-                email: email
-            }})
+            let { email, password } = req.body
+            // console.log(req.body);
+            let data = await User.findOne({
+                where: {
+                    email: email
+                }
+            })
             console.log(data);
-            
+
             if (!data) {
-                throw 'Invalid e-Mail or password' 
-            } 
+                throw 'Invalid e-Mail or password'
+            }
             if (data.role !== 'student') {
                 throw 'Invalid e-Mail or password'
             }
             let checkPassword = comparePassword(password, data.password)
-            console.log(checkPassword, "pass jing");
-            
-            if(!checkPassword) {
+            // console.log(checkPassword, "pass eneeeeh");
+
+            if (!checkPassword) {
                 throw 'Invalid e-Mail or password'
             }
-            let data2 = await Student.findOne({where:{
-                UserId: data.id
-            }})
-            req.session.UserId = data2.id  
-            req.session.role =  data.role
-            console.log(req.session, "ininih datanya");
-            
+            let data2 = await Student.findOne({
+                where: {
+                    UserId: data.id
+                }
+            })
+            req.session.UserId = data2.id
+            req.session.role = data.role
+            // console.log(req.session, "ininih datanya");
+
             res.redirect('/home')
         } catch (error) {
             res.send(error)
         }
     }
-    static async instructorSignIn(req,res) {
+    static async instructorSignIn(req, res) {
         try {
-            res.render('signin')
+            res.render('instructorlogin')
         } catch (error) {
             res.send(error)
         }
     }
-    static  async handlerinstructorSignIn(req,res) {
+    static async handlerinstructorSignIn(req, res) {
         try {
-            let {email, password} = req.body
-            let data = await User.findOne({where: {
-                email: email
-            }})
+            let { email, password } = req.body
+            let data = await User.findOne({
+                where: {
+                    email: email
+                }
+            })
+            console.log(data, "yang bener aje?");
+            
             if (!data) {
-                throw 'Invalid e-Mail or password' 
-            } 
+                throw 'Invalid e-Mail or password'
+            }
             if (data.role !== 'instructor') {
                 throw 'Invalid e-Mail or password'
             }
             let checkPassword = comparePassword(password, data.password)
-            if(!checkPassword) {
+            if (!checkPassword) {
                 throw 'Invalid e-Mail or password'
             }
-            req.session.userId = data.id  
-            req.session.role =  data.role
-            res.redirect('/home')
+            req.session.UserId = data.id
+            req.session.role = data.role
+            res.redirect('/instructor/home')   
         } catch (error) {
             res.send(error)
         }
     }
-    static async register(req,res) {
+    static async register(req, res) {
         try {
-            let {errors} = req.query
-            res.render('register', {errors})
+            let { errors } = req.query
+            res.render('register', { errors })
         } catch (error) {
             res.send(error)
         }
     }
-    static async handlerRegister(req,res) {
+    static async handlerRegister(req, res) {
         try {
-            let {email, password, name, className} = req.body
+            let { email, password, name, className } = req.body
             // console.log(req.body, "masooookkkkkkkkk");
             let role = 'student'
-            let data = await User.create({email, password, role})
-            let dataStudent = await Student.create({name, class: className, UserId: data.id})
+            let data = await User.create({ email, password, role })
+            let dataStudent = await Student.create({ name, class: className, UserId: data.id })
+            sendEmail(data.email)
             res.redirect('/login')
         } catch (error) {
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
-                error = error.errors.map(el=> {
+                error = error.errors.map(el => {
                     return el.message
                 })
                 res.redirect(`/register?errors=${error}`)
@@ -110,93 +118,120 @@ class Controller {
             res.send(error)
         }
     }
-    static async selectAllCourse(req,res) {
+    static async selectAllCourse(req, res) {
         try {
             let data = await Course.findAll()
-            res.render('allCourses', {data})
+            res.render('allCourses', { data })
         } catch (error) {
             res.send(error)
         }
     }
-    static async handlerSelectAllCourse(req,res) {
+    static async handlerSelectAllCourse(req, res) {
         try {
-            let {id} = req.params
-            let data = await StudentCourse.create({CourseId: id, StudentId: req.session.UserId})
+            let { id } = req.params
+            let data = await StudentCourse.create({ CourseId: id, StudentId: req.session.UserId })
+            console.log(data, id, req.session.UserId, "anjaayyyy ada");
+            
             res.redirect('/home')
         } catch (error) {
             res.send(error)
         }
     }
-    static async showAllStudentCourse(req,res) {
+    static async showAllStudentCourse(req, res) {
         try {
             // console.log(req.session.UserId,'ininih');
-            let data = await Student.findAll({include: Course, where: {
-                id: req.session.UserId
-            }})
-            console.log(data[0].Courses, "MASOOOOOOOOOOK");
-            res.render('detailstudentcourse', {data})
+            let data = await Student.findAll({
+                include: {
+                    model: Course
+                }, where: {
+                    id: req.session.UserId
+                }
+            })
+            console.log(data[0].Courses.length, "MASOOOOOOOOOOK INI BEDA TAPI", req.session.UserId);
+            res.render('detailstudentcourse', { data })
         } catch (error) {
             res.send(error)
         }
     }
-    static async deleteStudentCourse(req,res) {
+    static async deleteStudentCourse(req, res) {
         try {
             if (req.session.role !== 'student') {
                 throw error
             }
-            let {id} = req.params
-            let data = await StudentCourse.destroy({where: {
-                id
-            }})
+            let { id } = req.params
+            let data = await StudentCourse.destroy({
+                where: {
+                    id
+                }
+            })
             res.redirect('/home')
         } catch (error) {
             res.send(error)
         }
     }
-    static async getAllCoursesInstructor(req,res) {
+    static async getAllCoursesInstructor(req, res) {
         try {
             let data = await Course.findAll()
-            res.render('homeinstructor')
+            // console.log(data, "plisla woyyy");
+            
+            res.render('homeTeacher', {data})
         } catch (error) {
             res.send(error)
         }
     }
-    static async addCourseInstructor(req,res) {
+    static async addCourseInstructor(req, res) {
         try {
-            let data = await Course.findAll({include: Category})
-            res.render('addcourseinstructor', {data})
+            let data = await Course.findAll({ include: Category })
+            res.render('addcourseinstructor', { data })
         } catch (error) {
             res.send(error)
         }
     }
-    static async handlerAddCourseInstructor(req,res) {
+    static async handlerAddCourseInstructor(req, res) {
         try {
-            let {name, duration, CategoryId, description} = req.body
-            await Course.create({name, duration, CategoryId, description})
+            let { name, duration, CategoryId, description } = req.body
+            await Course.create({ name, duration, CategoryId, description })
             res.redirect('/instructor/home')
         } catch (error) {
             res.send(error)
         }
     }
-    static async editCoursesInstructor(req,res) {
+    static async editCoursesInstructor(req, res) {
+        try {
+            let { id } = req.params
+            let data = await Course.findByPK(id, { include: Category })
+            res.render('editcourseinstructor', { data })
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async deleteCoursesInstructor(req,res) {
         try {
             let {id} = req.params
-            let data = await Course.findByPK(id, {include: Category})
-            res.render('editcourseinstructor', {data})
-        } catch (error) {
-            res.send(error)
-        }
-    }
-    static async handlerEditCourseInstructor(req,res) {
-        try {
-            let {name, duration, CategoryId, description} = req.body
-            let data = await Course.update({name, duration, CategoryId, description})
+            console.log(req.params, "param ini bang");
+            let courseData = await StudentCourse.destroy({where: {
+                CourseId: id
+            }})
+            let data = await Course.destroy({where: {
+                id: id
+            }})
+            console.log(data, "bisalah woyyyy");
+            
             res.redirect('/instructor/home')
         } catch (error) {
             res.send(error)
         }
     }
-    static async logOut(req,res) {
+    static async handlerEditCourseInstructor(req, res) {
+        try {
+            let { name, duration, CategoryId, description } = req.body
+            let data = await Course.update({ name, duration, CategoryId, description })
+            res.redirect('/instructor/home')
+        } catch (error) {
+            res.send(error)
+        }
+    }
+    static async logOut(req, res) {
         try {
             req.session.destroy((err) => {
                 if (err) {

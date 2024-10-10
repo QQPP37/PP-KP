@@ -30,7 +30,7 @@ router.post('/instructor/course/add', Controller.handlerAddCourseInstructor)
 router.get('/instructor/course/edit/:id', Controller.editCoursesInstructor)
 router.post('/instructor/course/edit/:id', Controller.handlerEditCourseInstructor)
 router.get('/instructor/course/delete/:id', Controller.deleteCoursesInstructor)
-router.get('logout', Controller.logOut)
+router.get('/logout', Controller.logOut)
 
 
 module.exports = router

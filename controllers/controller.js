@@ -153,29 +153,24 @@ class Controller {
         try {
             const {category} = req.query
             let courses
-
-            if (category) {
+            if (category){
                 courses = await Course.findAll({
                     include: {
                         model: Category,
                         where: {
-                            id: category // Ubah CategoryId menjadi id
+                            id : `${category}`
                         }
                     }
                 })
             } else {
-                courses = await Course.findAll({
-                    include: Category // Tambahkan include Category
-                })
+                courses = await Course.findAll()
             }
-
             console.log(courses);
-
             if (req.session.role !== 'student') {
-                return res.redirect('/instructor/home')
+                res.redirect('/instructor/home')
             }
-
-            res.render('allCourses', { data: courses }) // Gunakan courses yang sudah diambil
+            let data = await Course.findAll()
+            res.render('allCourses', { data })
         } catch (error) {
             res.send(error)
         }

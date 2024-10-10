@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model, Op } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Course extends Model {
     /**
@@ -16,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
     get showDuration() {
       if (this.duration < 60) {
-          return `${this.duration} minutes`;
+          return `${this.duration} menit`;
       } else {
           const hours = Math.floor(this.duration / 60);
           const minutes = this.duration % 60;
-          return minutes > 0 ? `${hours} hours and ${minutes} minutes` : `${hours} hours`;
+          return minutes > 0 ? `${hours} jam dan ${minutes} menit` : `${hours} jam`;
       }
   }
   }
@@ -30,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Name is required'
+          msg: 'Nama diperlukan'
         },
         notNull: {
-          msg: 'Name is required'
+          msg: 'Nama diperlukan'
         }
       },
     },
@@ -42,10 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Duration is required'
+          msg: 'Durasi diperlukan'
         },
         notNull: {
-          msg: 'Duration is required'
+          msg: 'Durasi diperlukan'
         }
       }
     },
@@ -54,10 +52,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'Description is required'
+          msg: 'Deskripsi diperlukan'
         },
         notNull: {
-          msg: 'Description is required'
+          msg: 'Deskripsi diperlukan'
         }
       }
     }

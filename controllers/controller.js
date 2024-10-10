@@ -160,7 +160,8 @@ class Controller {
                         where: {
                             id : `${category}`
                         }
-                    }
+                    },
+                    
                 })
             } else {
                 courses = await Course.findAll()
@@ -169,8 +170,8 @@ class Controller {
             if (req.session.role !== 'student') {
                 res.redirect('/instructor/home')
             }
-            let data = await Course.findAll()
-            res.render('allCourses', { data })
+            // let data = await Course.findAll()
+            res.render('allCourses', { data: courses })
         } catch (error) {
             res.send(error)
         }
@@ -242,7 +243,7 @@ class Controller {
             }
             let { errors } = req.query
             let data = await Course.findAll({ include: Category })
-            let data2 = await Category.showAll()
+            let data2 = await Category.findAll()
             console.log(data, data2, 'lllllllllllllllllllllllll');
 
             res.render('addcourseinstructor', { data, data2, errors })

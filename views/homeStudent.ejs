@@ -42,12 +42,12 @@
                 </a>
               </li>
               <li class='max-lg:border-b max-lg:py-3 px-3'>
-                <a href='javascript:void(0)'
+                <a href='/course/add'
                   class='hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]'>Home</a>
               </li>
              
-              <li class='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                  class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>Courses</a>
+              <li class='max-lg:border-b max-lg:py-3 px-3'><a href='/home'
+                  class='hover:text-[#007bff] text-[#333] block font-semibold text-[15px]'>My Courses</a>
               </li>
               
             </ul>
@@ -98,7 +98,7 @@
 
       <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-6 mt-6 max-sm:max-w-sm max-sm:mx-auto">
         
-<% data.slice(0, 3).forEach(el => { %>
+<% data.forEach(el => { %>
  
 
         <div class="shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] rounded-lg overflow-hidden transition-all duration-500 hover:scale-105 relative">
@@ -115,7 +115,7 @@
 
           <div class="px-6 py-4 mt-4">
           <%= el.description %>
-
+          <%= el.showDuration %>
             <button type="button" class="w-full mt-8 px-5 py-2.5 text-sm text-white bg-blue-600 hover:bg-blue-700 rounded-full">Get Started</button>
           </div>
         </div>

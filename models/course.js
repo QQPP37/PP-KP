@@ -14,6 +14,15 @@ module.exports = (sequelize, DataTypes) => {
       Course.belongsTo(models.Category, { foreignKey: 'CategoryId' });
       Course.belongsToMany(models.Student, { through: models.StudentCourse });
     }
+    get showDuration() {
+      if (this.duration < 60) {
+          return `${this.duration} minutes`;
+      } else {
+          const hours = Math.floor(this.duration / 60);
+          const minutes = this.duration % 60;
+          return minutes > 0 ? `${hours} hours and ${minutes} minutes` : `${hours} hours`;
+      }
+  }
   }
   Course.init({
     name: {

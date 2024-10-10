@@ -11,7 +11,7 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmail = async (toEmail, subject = 'Congratulation You Have Been Enrolled!', htmlContent= 'Halo'
+const sendEmail = async (toEmail, name, subject = 'Congratulation You Have Been Enrolled!', htmlContent= 'Halo'
     ) => {
   try {
     let mailOptions = {

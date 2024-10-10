@@ -49,7 +49,7 @@ class Controller {
             req.session.role =  data.role
             console.log(req.session, "ininih datanya");
             
-            res.redirect('/home')
+            res.redirect('/course/add')
         } catch (error) {
             res.send(error)
         }

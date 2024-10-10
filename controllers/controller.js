@@ -15,11 +15,13 @@ class Controller {
     }
     static async studentSignIn(req, res) {
         try {
+            let { errors } = req.query
+            
             if (req.session.UserId) {
                 res.redirect('/home')
             }
             let {mail} = req.query
-            res.render('login', {mail})
+            res.render('login', {mail,errors})
         } catch (error) {
             res.send(error)
         }
@@ -28,6 +30,7 @@ class Controller {
         try {
             let { email, password } = req.body
             // console.log(req.body);
+            let { errors } = req.query
             let data = await User.findOne({
                 where: {
                     email: email
@@ -56,14 +59,23 @@ class Controller {
             req.session.role = data.role
             // console.log(req.session, "ininih datanya");
 
-            res.redirect('/home')
+            res.redirect('/home', { errors })
         } catch (error) {
-            res.send(error)
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
+                error = error.errors.map(el => {
+                    return el.message
+                })
+
+                res.redirect(`/signin?errors=${error}`)
+            } else {
+                res.redirect(`/signin?errors=${error}`)
+            }
         }
     }
     static async instructorSignIn(req, res) {
         try {
-            res.render('instructorlogin')
+            let { errors } = req.query
+            res.render('instructorlogin', { errors })
         } catch (error) {
             res.send(error)
         }
@@ -71,6 +83,7 @@ class Controller {
     static async handlerinstructorSignIn(req, res) {
         try {
             let { email, password } = req.body
+
             let data = await User.findOne({
                 where: {
                     email: email
@@ -92,7 +105,15 @@ class Controller {
             req.session.role = data.role
             res.redirect('/instructor/home')
         } catch (error) {
-            res.send(error)
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
+                error = error.errors.map(el => {
+                    return el.message
+                })
+
+                res.redirect(`/instructorlogin?errors=${error}`)
+            } else {
+                res.redirect(`/instructorlogin?errors=${error}`)
+            }
         }
     }
     static async register(req, res) {
@@ -120,9 +141,11 @@ class Controller {
                 error = error.errors.map(el => {
                     return el.message
                 })
+
+                res.redirect(`/register?errors=${error}`)
+            } else {
                 res.redirect(`/register?errors=${error}`)
             }
-            res.send(error)
         }
     }
     static async selectAllCourse(req, res) {
@@ -216,7 +239,15 @@ class Controller {
             await Course.create({ name, duration, CategoryId, description })
             res.redirect('/instructor/home')
         } catch (error) {
-            res.send(error)
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
+                error = error.errors.map(el => {
+                    return el.message
+                })
+
+                res.redirect(`/instructor/course/add?errors=${error}`)
+            } else {
+                res.redirect(`/instructor/course/add?errors=${error}`)
+            }
         }
     }
     static async editCoursesInstructor(req, res) {
@@ -224,6 +255,7 @@ class Controller {
             if (req.session.role !== 'instructor') {
                 res.redirect('/home')
             }
+            const { errors } = req.query
             console.log('MaSOOOOkkkk');
 
             let { id } = req.params
@@ -233,7 +265,7 @@ class Controller {
             let data2 = await Category.findAll()
             console.log(data, data2, "KIIINNGG KACAWWWWW");
 
-            res.render('editcourseinstructor', { data, data2 })
+            res.render('editcourseinstructor', { data, data2, errors })
         } catch (error) {
             res.send(error)
         }
@@ -272,7 +304,15 @@ class Controller {
             )
             res.redirect('/instructor/home')
         } catch (error) {
-            res.send(error)
+            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
+                error = error.errors.map(el => {
+                    return el.message
+                })
+
+                res.redirect(`/instructor/course/edit/${req.params.id}?errors=${error}`)
+            } else {
+                res.send(error)
+            }
         }
     }
     static async logOut(req, res) {
@@ -290,6 +330,7 @@ class Controller {
         }
     }
 }
+
 
 
 module.exports = Controller

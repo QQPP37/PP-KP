@@ -43,14 +43,11 @@ class Controller {
             if (!checkPassword) {
                 throw 'Invalid e-Mail or password'
             }
-            let data2 = await Student.findOne({where:{
-                UserId: data.id
-            }})
-            req.session.UserId = data2.id  
-            req.session.role =  data.role
-            console.log(req.session, "ininih datanya");
-            
-            res.redirect('/course/add')
+            let data2 = await Student.findOne({
+                where: {
+                    UserId: data.id
+                }
+            })
             req.session.UserId = data2.id
             req.session.role = data.role
             // console.log(req.session, "ininih datanya");

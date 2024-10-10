@@ -15,6 +15,9 @@ class Controller {
     }
     static async studentSignIn(req, res) {
         try {
+            if (req.session.UserId) {
+                res.redirect('/home')
+            }
             let {mail} = req.query
             res.render('login', {mail})
         } catch (error) {
@@ -94,6 +97,9 @@ class Controller {
     }
     static async register(req, res) {
         try {
+            if (req.session.UserId) {
+                res.redirect('/home')
+            }
             let { errors } = req.query
             res.render('register', { errors })
         } catch (error) {
@@ -108,7 +114,7 @@ class Controller {
             let data = await User.create({ email, password, role })
             let dataStudent = await Student.create({ name, class: className, UserId: data.id })
             sendEmail(data.email, dataStudent.name)
-            res.redirect(`/login?mail=${data.email}`)
+            res.redirect(`/signin?mail=${data.email}`)
         } catch (error) {
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeConstraintError') {
                 error = error.errors.map(el => {
@@ -168,7 +174,8 @@ class Controller {
             let { id } = req.params
             let data = await StudentCourse.destroy({
                 where: {
-                    id
+                    StudentId: req.session.UserId,
+                    CourseId: id
                 }
             })
             res.redirect('/home')

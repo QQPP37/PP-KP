@@ -73,7 +73,7 @@ class Controller {
                 }
             })
             console.log(data, "yang bener aje?");
-            
+
             if (!data) {
                 throw 'Invalid e-Mail or password'
             }
@@ -86,7 +86,7 @@ class Controller {
             }
             req.session.UserId = data.id
             req.session.role = data.role
-            res.redirect('/instructor/home')   
+            res.redirect('/instructor/home')
         } catch (error) {
             res.send(error)
         }
@@ -134,7 +134,7 @@ class Controller {
             let { id } = req.params
             let data = await StudentCourse.create({ CourseId: id, StudentId: req.session.UserId })
             console.log(data, id, req.session.UserId, "anjaayyyy ada");
-            
+
             res.redirect('/home')
         } catch (error) {
             res.send(error)
@@ -182,8 +182,8 @@ class Controller {
             }
             let data = await Course.findAll()
             // console.log(data, "plisla woyyy");
-            
-            res.render('homeTeacher', {data})
+
+            res.render('homeTeacher', { data })
         } catch (error) {
             res.send(error)
         }
@@ -195,8 +195,8 @@ class Controller {
             }
             let data = await Course.findAll({ include: Category })
             let data2 = await Category.findAll()
-            console.log(data,data2,'lllllllllllllllllllllllll');
-            
+            console.log(data, data2, 'lllllllllllllllllllllllll');
+
             res.render('addcourseinstructor', { data, data2 })
         } catch (error) {
             res.send(error)
@@ -217,31 +217,35 @@ class Controller {
                 res.redirect('/home')
             }
             console.log('MaSOOOOkkkk');
-            
+
             let { id } = req.params
             console.log(id, "INI ID WOY");
-            
+
             let data = await Course.findByPk(id)
             let data2 = await Category.findAll()
             console.log(data, data2, "KIIINNGG KACAWWWWW");
-            
+
             res.render('editcourseinstructor', { data, data2 })
         } catch (error) {
             res.send(error)
         }
     }
-    static async deleteCoursesInstructor(req,res) {
+    static async deleteCoursesInstructor(req, res) {
         try {
-            let {id} = req.params
+            let { id } = req.params
             console.log(req.params, "param ini bang");
-            let courseData = await StudentCourse.destroy({where: {
-                CourseId: id
-            }})
-            let data = await Course.destroy({where: {
-                id: id
-            }})
+            let courseData = await StudentCourse.destroy({
+                where: {
+                    CourseId: id
+                }
+            })
+            let data = await Course.destroy({
+                where: {
+                    id: id
+                }
+            })
             console.log(data, "bisalah woyyyy");
-            
+
             res.redirect('/instructor/home')
         } catch (error) {
             res.send(error)
@@ -249,8 +253,15 @@ class Controller {
     }
     static async handlerEditCourseInstructor(req, res) {
         try {
+            let { id } = req.params
             let { name, duration, CategoryId, description } = req.body
-            let data = await Course.update({ name, duration, CategoryId, description })
+            let data = await Course.update({ name, duration, CategoryId, description },
+                {
+                    where: {
+                        id
+                    }
+                }
+            )
             res.redirect('/instructor/home')
         } catch (error) {
             res.send(error)

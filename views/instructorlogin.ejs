@@ -16,7 +16,13 @@
       <div class="text-center mb-12">
        <h1 class="text-2xl font-bold">Login</h1>
       </div>
-
+      <% if (errors) { %>
+     
+        <div class="bg-red-100 text-red-800 p-4 rounded-lg mb-10" role="alert">
+          <strong class="font-bold text-sm mr-4">Error!</strong>
+          <span class="block text-sm sm:inline max-sm:mt-2"><%= errors %></span>
+        </div>
+      <% } %>
       <form action="/instructorlogin" method="post">
         <div class="space-y-6">
           <div>
@@ -34,7 +40,7 @@
 
         <div class="!mt-12">
           <button type="submit" class="w-full py-3 px-4 text-sm tracking-wider font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
-            Create an account
+          Login
           </button>
         </div>
       
